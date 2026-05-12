@@ -78,8 +78,10 @@ button {
   position: relative;
   z-index: 1;
   display: grid;
-  width: min(100%, 430px);
-  min-height: min(760px, calc(100svh - 36px));
+  grid-template-columns: minmax(0, 1fr);
+  width: calc(100vw - 24px);
+  max-width: 430px;
+  min-height: min(740px, calc(100svh - 48px));
   padding: clamp(22px, 6vw, 34px);
   overflow: hidden;
   border: 1px solid var(--line);
@@ -105,14 +107,16 @@ button {
 
 .screen {
   display: flex;
+  width: 100%;
   min-height: 100%;
+  min-width: 0;
   flex-direction: column;
   justify-content: space-between;
   gap: 28px;
 }
 
 .landing-screen {
-  padding-top: clamp(64px, 15svh, 112px);
+  padding-top: clamp(52px, 11svh, 86px);
 }
 
 .microcopy {
@@ -130,24 +134,28 @@ h1,
 h2,
 h3,
 p {
+  max-width: 100%;
   overflow-wrap: anywhere;
 }
 
 h1,
 h2 {
-  max-width: 11.5em;
   margin: 0;
   color: var(--ink);
-  font-size: clamp(2.35rem, 12vw, 4.65rem);
+  font-size: clamp(2.1rem, 10.6vw, 4.4rem);
   font-weight: 850;
   letter-spacing: 0;
   line-height: 0.94;
 }
 
 h2 {
-  max-width: 12em;
   font-size: clamp(2rem, 9.8vw, 3.55rem);
   line-height: 0.98;
+}
+
+.curious-screen h2 {
+  font-size: clamp(1.75rem, 7.6vw, 2.65rem);
+  line-height: 1.03;
 }
 
 .lede,
@@ -274,14 +282,16 @@ h2 {
   margin-top: 0;
 }
 
-.next-card {
+.question-panel {
+  display: grid;
+  gap: 14px;
   padding: 18px;
   border: 1px solid rgba(143, 31, 66, 0.16);
   border-radius: 18px;
   background: linear-gradient(135deg, rgba(199, 230, 213, 0.55), rgba(255, 255, 255, 0.72));
 }
 
-.next-card p {
+.question-kicker {
   margin: 0 0 6px;
   color: var(--rose-deep);
   font-size: 0.78rem;
@@ -290,13 +300,59 @@ h2 {
   text-transform: uppercase;
 }
 
-.next-card h3 {
+.question-panel h3 {
   margin: 0;
   color: var(--ink);
   font-size: clamp(1.38rem, 6vw, 1.85rem);
   font-weight: 820;
   letter-spacing: 0;
   line-height: 1.03;
+}
+
+.adventure-options {
+  display: grid;
+  gap: 10px;
+}
+
+.adventure-option {
+  min-height: 52px;
+  padding: 13px 14px;
+  color: var(--ink);
+  border: 1px solid rgba(33, 23, 21, 0.12);
+  border-radius: 14px;
+  cursor: pointer;
+  background: rgba(255, 253, 249, 0.82);
+  font-size: clamp(0.96rem, 4vw, 1.04rem);
+  font-weight: 780;
+  letter-spacing: 0;
+  line-height: 1.12;
+  text-align: left;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.adventure-option:hover,
+.adventure-option:focus-visible,
+.adventure-option[data-selected="true"] {
+  outline: none;
+  border-color: rgba(143, 31, 66, 0.34);
+  background: #ffffff;
+  box-shadow: 0 10px 20px rgba(93, 43, 46, 0.1);
+  transform: translateY(-1px);
+}
+
+.result-note {
+  padding: 14px;
+  color: #3e312d;
+  border: 1px solid rgba(226, 173, 69, 0.34);
+  border-radius: 14px;
+  background: rgba(255, 246, 237, 0.86);
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.28;
 }
 
 strong {
@@ -315,7 +371,7 @@ strong {
   }
 
   .landing-screen {
-    padding-top: 54px;
+    padding-top: 44px;
   }
 
   .story-mark {
@@ -326,7 +382,21 @@ strong {
   }
 
   .choice-button {
-    min-height: 60px;
+    min-height: 58px;
+  }
+
+  h1 {
+    font-size: clamp(1.95rem, 9.8vw, 2.32rem);
+    line-height: 0.98;
+  }
+
+  .lede {
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+
+  .choice-stack {
+    gap: 10px;
   }
 }
 

@@ -63,7 +63,8 @@ The implemented local starter currently includes:
 - A configurable first name constant, currently `Mike`.
 - A mobile-first landing page.
 - A curious explanation screen.
-- A temporary adventure intro screen showing the selected `entryMode`.
+- A first CYOA compatibility question for opening date energy.
+- A selectable result note after the visitor chooses a date energy.
 - Hash-based navigation:
   - `#/`
   - `#/curious`
@@ -72,11 +73,13 @@ The implemented local starter currently includes:
 
 Important note: `npm install` was started locally but interrupted before completion, so an online Codex session should install dependencies fresh.
 
+Update: the local build was continued after that interruption. Dependencies now install cleanly, `package-lock.json` exists, and `npm run build` passes.
+
 ## Suggested Next Prompt For Online Codex
 Use this prompt to continue from a phone:
 
 ```text
-Please continue building this CYODA React/Vite project. Read PROJECT_SUMMARY.md first. Install dependencies, run the build, fix any issues, then start the dev server. Verify the mobile landing flow at 360px, 390px, and 430px widths. Keep the tone playful, respectful, and mobile-first.
+Please continue building this CYODA React/Vite project. Read PROJECT_SUMMARY.md first. Run npm install, run the build, then continue expanding the CYOA story. Verify the mobile landing flow at 360px, 390px, and 430px widths. Keep the tone playful, respectful, and mobile-first.
 ```
 
 ## Next Implementation Steps
@@ -93,7 +96,7 @@ Please continue building this CYODA React/Vite project. Read PROJECT_SUMMARY.md 
    - `Just curious` opens the explanation screen.
    - `Start the adventure` enters as `curious`.
    - `Back` and browser navigation do not trap the visitor.
-6. Replace the temporary adventure intro with the first real CYOA compatibility question.
+6. Add the next CYOA branch after the opening date energy question.
 
 ## Design Direction
 The site should feel like a tiny story app discovered in the wild, not like a dating profile or marketing page.

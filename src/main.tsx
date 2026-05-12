@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useMemo, useState } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowLeft, Heart, HelpCircle, Sparkles } from "lucide-react";
 import "./styles.css";
@@ -8,6 +8,7 @@ const config = {
 };
 
 type EntryMode = "interested" | "curious";
+type DateEnergyId = "quiet" | "chaotic" | "food";
 type ViewState =
   | { screen: "landing"; entryMode: null }
   | { screen: "curious"; entryMode: null }
@@ -48,16 +49,6 @@ function App() {
     return () => window.removeEventListener("hashchange", handleNavigation);
   }, []);
 
-  const accentCopy = useMemo(() => {
-    if (view.screen !== "adventure") {
-      return null;
-    }
-
-    return view.entryMode === "interested"
-      ? "Excellent. Bold, charming, and already better than most dating apps."
-      : "Curiosity is a perfectly respectable doorway. No romantic paperwork required.";
-  }, [view]);
-
   return (
     <main className="app-shell">
       <div className="ambient ambient-one" />
@@ -84,9 +75,8 @@ function App() {
         )}
 
         {view.screen === "adventure" && view.entryMode && (
-          <AdventureIntro
+          <AdventureScreen
             entryMode={view.entryMode}
-            accentCopy={accentCopy ?? ""}
             onBack={() => navigate(view.entryMode === "curious" ? "/curious" : "/")}
           />
         )}
@@ -166,11 +156,44 @@ function CuriousScreen({ onBack, onStart }: CuriousScreenProps) {
 
 type AdventureIntroProps = {
   entryMode: EntryMode;
-  accentCopy: string;
   onBack: () => void;
 };
 
-function AdventureIntro({ entryMode, accentCopy, onBack }: AdventureIntroProps) {
+const dateEnergyOptions: Array<{
+  id: DateEnergyId;
+  label: string;
+  result: string;
+}> = [
+  {
+    id: "quiet",
+    label: "Quiet coffee and good conversation",
+    result:
+      "A strong start. Low drama, high signal, and plenty of room for suspiciously specific opinions.",
+  },
+  {
+    id: "chaotic",
+    label: "Something chaotic and memorable",
+    result:
+      "Dangerously promising. This path may involve mini golf, a weird museum, or a story that improves with retelling.",
+  },
+  {
+    id: "food",
+    label: "Food first, feelings later",
+    result:
+      "Practical, excellent, and emotionally well-catered. Compatibility improves sharply in the presence of chips.",
+  },
+];
+
+function AdventureScreen({ entryMode, onBack }: AdventureIntroProps) {
+  const [selectedEnergy, setSelectedEnergy] = useState<DateEnergyId | null>(null);
+  const selectedOption = dateEnergyOptions.find(
+    (option) => option.id === selectedEnergy,
+  );
+  const accentCopy =
+    entryMode === "interested"
+      ? "Excellent. Bold, charming, and already better than most dating apps."
+      : "Curiosity is a perfectly respectable doorway. No romantic paperwork required.";
+
   return (
     <div className="screen adventure-screen">
       <button className="back-button" type="button" onClick={onBack}>
@@ -182,14 +205,34 @@ function AdventureIntro({ entryMode, accentCopy, onBack }: AdventureIntroProps) 
         <p className="microcopy">Adventure started</p>
         <h2>{accentCopy}</h2>
         <p className="supporting-copy">
-          Entry mode: <strong>{entryMode}</strong>. The compatibility questions
-          will begin here next.
+          Entry mode: <strong>{entryMode}</strong>. First compatibility test:
+          date energy.
         </p>
       </div>
 
-      <div className="next-card">
-        <p>Coming up first</p>
-        <h3>Pick the opening date energy.</h3>
+      <div className="question-panel">
+        <p className="question-kicker">Pick one</p>
+        <h3>What should the opening date energy be?</h3>
+
+        <div className="adventure-options" aria-label="Choose the first date energy">
+          {dateEnergyOptions.map((option) => (
+            <button
+              className="adventure-option"
+              data-selected={selectedEnergy === option.id}
+              key={option.id}
+              type="button"
+              onClick={() => setSelectedEnergy(option.id)}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        {selectedOption && (
+          <div className="result-note" role="status">
+            {selectedOption.result}
+          </div>
+        )}
       </div>
     </div>
   );
