@@ -1,4 +1,4 @@
-import { StrictMode, useMemo, useState } from "react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -385,14 +385,6 @@ function App() {
   const node = story.nodes[state.nodeId];
   const ending = state.endingId ? story.endings[state.endingId] : null;
 
-  const compatibilityScore = useMemo(() => {
-    const positiveKeys: ScoreDimension[] = ["openness", "humour", "curiosity", "empathy", "accountability", "pluralism", "politicalNuance", "emotionalMaturity", "conflictStyle", "directness", "respectForBoundaries"];
-    const negativeKeys: ScoreDimension[] = ["entitlement", "resentment", "control", "contempt"];
-    const positive = positiveKeys.reduce((n, k) => n + (state.scores[k] ?? 0), 0);
-    const negative = negativeKeys.reduce((n, k) => n + (state.scores[k] ?? 0), 0);
-    return positive - negative;
-  }, [state.scores]);
-
   const handleChoice = (choice: Choice) => {
     setState((prev) => {
       const nextScores = { ...prev.scores };
@@ -446,32 +438,11 @@ function App() {
                 <button key={choice.id} onClick={() => handleChoice(choice)}>{fill(choice.label, names)}</button>
               ))}
             </div>
-            <p className="meta">State: {state.conversationState} · Compatibility: {compatibilityScore}</p>
           </>
         ) : ending ? (
           <>
             <h2>Result: {ending.title}</h2>
             <p>{ending.summary}</p>
-            <p>
-              You and {names.subjectName} reached <strong>{state.history.length}</strong> decision points. Atmosphere ended <strong>{state.conversationState}</strong>.
-            </p>
-            <h3>Where you connected</h3>
-            <ul>
-              {compatibilityScore > 2 ? <li>Shared humour and mutual curiosity.</li> : <li>Some rapport, but patchy momentum.</li>}
-              {(state.scores.accountability ?? 0) > 0 && <li>Accountability showed up under pressure.</li>}
-              {(state.scores.politicalNuance ?? 0) > 0 && <li>You handled politics with some nuance.</li>}
-            </ul>
-            <h3>Where you diverged</h3>
-            <ul>
-              {(state.scores.directness ?? 0) < 1 && <li>Signals stayed fuzzy when clarity was needed.</li>}
-              {(state.scores.control ?? 0) > 1 && <li>Control and point-scoring created friction.</li>}
-              {(state.scores.empathy ?? 0) < 0 && <li>Empathy dropped during disagreement.</li>}
-            </ul>
-            <h3>Red flags noticed</h3>
-            {state.redFlags.length ? <ul>{state.redFlags.map((f) => <li key={f}>{f}</li>)}</ul> : <p>None major.</p>}
-            <p className="meta">
-              Likely outcome: {compatibilityScore >= 4 ? `${names.subjectName} would likely want to keep talking.` : `Probably a one-evening story.`}
-            </p>
             <button onClick={() => { setStarted(false); setState({ nodeId: story.startNodeId, conversationState: "neutral", scores: {}, redFlags: [], unlockedTopics: [], history: [], endingId: null }); }}>Play again</button>
           </>
         ) : null}
