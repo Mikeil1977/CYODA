@@ -423,7 +423,7 @@ function App() {
     return (
       <main className="app">
         <section className="card">
-          <h1>Twenty Minutes with Mike</h1>
+          <h1>A Chance Encounter</h1>
           <p className="sub">A branching pub conversation prototype.</p>
           <label>Player name<input value={names.playerName} onChange={(e) => setNames((n) => ({ ...n, playerName: e.target.value || "Sally" }))} /></label>
           <label>Friend name<input value={names.friendName} onChange={(e) => setNames((n) => ({ ...n, friendName: e.target.value || "Jill" }))} /></label>
