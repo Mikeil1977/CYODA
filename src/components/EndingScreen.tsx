@@ -1,5 +1,5 @@
 import type { EndingTemplate, Names, StoryState } from "../types/conversation";
-import { fill } from "../engine/storyEngine";
+import { fill, getEndingReflection } from "../engine/storyEngine";
 import { DebugPanel } from "./StoryScreen";
 
 type EndingScreenProps = {
@@ -13,6 +13,8 @@ type EndingScreenProps = {
 };
 
 export function EndingScreen({ devMode, ending, names, previousStepsCount, state, onBack, onReset }: EndingScreenProps) {
+  const reflection = getEndingReflection(state);
+
   return (
     <main className="app">
       <section className="card">
@@ -25,6 +27,24 @@ export function EndingScreen({ devMode, ending, names, previousStepsCount, state
 
         <h2>Result: {ending.title}</h2>
         <p>{fill(ending.summary, names)}</p>
+
+        <section className="ending-reflection" aria-label="Ending reflection">
+          <p className="reflection-lede">{fill(reflection.reached, names)}</p>
+
+          <h3>What seemed to work</h3>
+          <ul>
+            {reflection.worked.map((item) => <li key={item}>{fill(item, names)}</li>)}
+          </ul>
+
+          <h3>Where things cooled</h3>
+          <ul>
+            {reflection.cooled.map((item) => <li key={item}>{fill(item, names)}</li>)}
+          </ul>
+
+          <h3>Likely outcome</h3>
+          <p>{fill(reflection.outcome, names)}</p>
+        </section>
+
         <button onClick={onReset}>Play again</button>
 
         {devMode ? <DebugPanel names={names} state={state} /> : null}

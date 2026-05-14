@@ -83,6 +83,13 @@ export type StoryState = {
   endingId: string | null;
 };
 
+export type EndingReflection = {
+  reached: string;
+  worked: string[];
+  cooled: string[];
+  outcome: string;
+};
+
 export type Names = {
   playerName: string;
   friendName: string;

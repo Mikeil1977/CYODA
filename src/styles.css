@@ -255,6 +255,27 @@ input:focus {
   text-align: left;
 }
 
+.ending-reflection {
+  margin: 24px 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(35, 106, 112, 0.18);
+}
+
+.ending-reflection h3 {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: clamp(1.05rem, 4vw, 1.22rem);
+}
+
+.ending-reflection ul {
+  margin-bottom: 12px;
+}
+
+.reflection-lede {
+  color: var(--teal-dark);
+  font-weight: 700;
+}
+
 .debug-panel h3 {
   margin-bottom: 14px;
 }
