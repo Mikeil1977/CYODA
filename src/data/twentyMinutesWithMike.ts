@@ -63,7 +63,10 @@ export const story: StoryData = {
       title: "At A Table",
       text: [
         "You and {friendName} take a table. A staff member brings over menus and says the kitchen is close to last orders.",
-        "A man comes in and goes to the bar. He seems to know everyone. {friendName}'s phone rings before anything else happens.",
+        "A man comes in and goes to the bar. He seems to know everyone.",
+        "{friendName}'s phone rings before anything else happens. She looks at the screen and winces.",
+        "'Sorry, this is an emergency one. I might be twenty minutes.'",
+        "She steps outside, leaving you with your drink, the menu, and the noise from the bar.",
       ],
       choices: [
         {
@@ -72,6 +75,46 @@ export const story: StoryData = {
           nextId: "ending_table_unfinished",
           type: "gate",
           effects: { state: "flat" },
+        },
+        {
+          id: "go_to_bar_from_table",
+          label: "Go to the bar while {friendName} takes the call",
+          nextId: "table_bar_approach",
+          type: "score",
+          effects: { state: "curious", scores: { openness: 1 } },
+        },
+      ],
+    },
+    table_bar_approach: {
+      id: "table_bar_approach",
+      title: "At The Bar",
+      text: [
+        "You take your drink and go to the bar.",
+        "The man who came in earlier is talking with the regulars. Someone seems to have poured his pint before he asked.",
+        "The conversation is about Boris Johnson and the pandemic. One of them, Stevie, turns slightly.",
+        "'What do you think?'",
+      ],
+      choices: [
+        {
+          id: "boris_good",
+          label: "I think everyone should leave poor Boris alone. He was just doing his best.",
+          nextId: "ending_poor_fit",
+          type: "gate",
+          effects: { state: "closed", scores: { politicalNuance: -2, empathy: -1 } },
+        },
+        {
+          id: "boris_bad",
+          label: "Only Trump and Bolsonaro did worse. He should be ashamed of that Superman of Capitalism speech.",
+          nextId: "join_offer",
+          type: "score",
+          effects: { state: "curious", scores: { politicalNuance: 2, antiAuthoritarianism: 2, humour: 1 } },
+        },
+        {
+          id: "boris_neutral",
+          label: "I don't really know. I avoid politics when I can.",
+          nextId: "neutral_followup",
+          type: "toneShift",
+          effects: { state: "guarded", scores: { politicalNuance: -1 } },
         },
       ],
     },
