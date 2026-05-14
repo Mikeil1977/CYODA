@@ -187,8 +187,8 @@ export function getEndingReflection(state: StoryState): EndingReflection {
     addUnique(worked, "You noticed the difference between having a bad mood and handing it to everyone else.");
   }
 
-  if (hasAnyChoice(state, ["bad_building_worse_apology", "sorry_before_defending", "same_joke_too_late"])) {
-    addUnique(worked, "You could keep things light without dodging the repair.");
+  if (hasAnyChoice(state, ["shopping_list_cupboards", "flirting_homework", "notice_infinity", "boron_ambitious"])) {
+    addUnique(worked, "You noticed the odd beer mat and let it stay playful.");
   }
 
   if (hasAnyChoice(state, ["good_in_room", "enjoy_watching"])) {
@@ -239,8 +239,8 @@ export function getEndingReflection(state: StoryState): EndingReflection {
     addUnique(cooled, "Sarah's bad mood made it easy to expect other people to read around it.");
   }
 
-  if (hasAnyChoice(state, ["engineering_critique", "beer_mats_survive"])) {
-    addUnique(cooled, "The beer-mat apology stayed funny, but the repair got a little lost.");
+  if (hasChoice(state, "choose_not_to_ask")) {
+    addUnique(cooled, "The beer-mat list stayed at a distance, which was fair enough.");
   }
 
   if (hasAnyChoice(state, ["funny_unless_birthday", "quiet_minute", "compete_for_space"])) {
@@ -261,6 +261,23 @@ export function getEndingReflection(state: StoryState): EndingReflection {
 
   if (hasChoice(state, "accept_awkwardly")) {
     addUnique(cooled, "The almost-kiss made you wobble for a moment, but you recovered.");
+  }
+
+  if (
+    hasAnyChoice(state, [
+      "homework_number_warm",
+      "keep_beer_mat_warm",
+      "sweet_or_help_warm",
+      "work_it_out_later_warm",
+      "could_have_asked_phone_warm",
+      "homework_number_awkward",
+      "keep_beer_mat_awkward",
+      "sweet_or_help_awkward",
+      "work_it_out_later_awkward",
+      "could_have_asked_phone_awkward",
+    ])
+  ) {
+    addUnique(worked, "You let the beer-mat strangeness stay charming rather than making it heavy.");
   }
 
   if (hasAnyChoice(state, ["tease_pressure", "sulk_accuse"])) {
