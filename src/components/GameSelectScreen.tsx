@@ -8,7 +8,7 @@ export function GameSelectScreen({ onLeave, onPuzzle, onQuickQuestions }: GameSe
   return (
     <main className="app">
       <section className="card landing-card">
-        <h1>Choose your game</h1>
+        <h1>Choose your path</h1>
         <p className="sub">A few ways to find out whether you and this guy might click.</p>
 
         <div className="choices landing-actions game-actions">
