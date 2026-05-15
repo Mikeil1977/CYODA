@@ -38,6 +38,11 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
   const selectAnswer = (value: AgreementValue) => {
     setAnswers((current) => ({ ...current, [question.id]: value }));
 
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
+
     if (isLastQuestion) {
       setShowResults(true);
       return;
