@@ -38,6 +38,11 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
   const selectAnswer = (value: AgreementValue) => {
     setAnswers((current) => ({ ...current, [question.id]: value }));
 
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
+
     if (isLastQuestion) {
       setShowResults(true);
       return;
@@ -89,7 +94,7 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
         <h2>{question.prompt}</h2>
         {question.example ? <p className="question-example">{question.example}</p> : null}
 
-        <fieldset className="scale-fieldset">
+        <fieldset key={question.id} className="scale-fieldset">
           <legend className="sr-only">{question.prompt}</legend>
           {agreementScale.map((option) => (
             <label
