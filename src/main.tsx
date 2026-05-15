@@ -1,17 +1,21 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { EndingScreen } from "./components/EndingScreen";
-import { LandingScreen } from "./components/LandingScreen";
+import { GameSelectScreen } from "./components/GameSelectScreen";
+import { PuzzleScreen } from "./components/PuzzleScreen";
+import { QuickQuestionsScreen } from "./components/QuickQuestionsScreen";
 import { StoryScreen } from "./components/StoryScreen";
 import { defaultNames, story } from "./data/twentyMinutesWithMike";
 import { createInitialStoryState, getNextStoryState, isDevModeEnabled } from "./engine/storyEngine";
 import type { Choice, Names, StoryState } from "./types/conversation";
 import "./styles.css";
 
+type AppView = "gameSelect" | "quickQuestions" | "puzzle" | "story";
+
 function App() {
   const devMode = isDevModeEnabled();
-  const [names, setNames] = useState<Names>(defaultNames);
-  const [started, setStarted] = useState(false);
+  const [names] = useState<Names>(defaultNames);
+  const [view, setView] = useState<AppView>("gameSelect");
   const [state, setState] = useState<StoryState>(() => createInitialStoryState(story));
   const [previousStates, setPreviousStates] = useState<StoryState[]>([]);
 
@@ -36,35 +40,32 @@ function App() {
   const resetStory = () => {
     setPreviousStates([]);
     setState(createInitialStoryState(story));
-    setStarted(false);
-  };
-
-  const startAdventure = () => {
-    setNames((n) => ({
-      playerName: n.playerName.trim() || defaultNames.playerName,
-      friendName: n.friendName.trim() || defaultNames.friendName,
-      subjectName: n.subjectName.trim() || defaultNames.subjectName,
-    }));
-    setStarted(true);
+    setView("gameSelect");
   };
 
   const leaveForGoogle = () => {
     window.location.assign("https://www.google.com");
   };
 
-  if (!started) {
+  if (view === "gameSelect") {
     return (
-      <LandingScreen
-        devMode={devMode}
-        names={names}
+      <GameSelectScreen
         onLeave={leaveForGoogle}
-        onNamesChange={setNames}
-        onStart={startAdventure}
+        onPuzzle={() => setView("puzzle")}
+        onQuickQuestions={() => setView("quickQuestions")}
       />
     );
   }
 
-  if (ending) {
+  if (view === "quickQuestions") {
+    return <QuickQuestionsScreen devMode={devMode} onBack={() => setView("gameSelect")} />;
+  }
+
+  if (view === "puzzle") {
+    return <PuzzleScreen onBack={() => setView("gameSelect")} />;
+  }
+
+  if (view === "story" && ending) {
     return (
       <EndingScreen
         devMode={devMode}
@@ -78,17 +79,21 @@ function App() {
     );
   }
 
-  return (
-    <StoryScreen
-      devMode={devMode}
-      names={names}
-      node={node}
-      previousStepsCount={previousStates.length}
-      state={state}
-      onBack={handleBack}
-      onChoice={handleChoice}
-    />
-  );
+  if (view === "story") {
+    return (
+      <StoryScreen
+        devMode={devMode}
+        names={names}
+        node={node}
+        previousStepsCount={previousStates.length}
+        state={state}
+        onBack={handleBack}
+        onChoice={handleChoice}
+      />
+    );
+  }
+
+  return null;
 }
 
 createRoot(document.getElementById("root")!).render(
