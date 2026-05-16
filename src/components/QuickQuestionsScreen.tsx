@@ -209,6 +209,12 @@ function CompatibilityMatrix({ result }: CompatibilityMatrixProps) {
           aria-label="A two dimensional compatibility matrix comparing your answers with their preferences."
           role="img"
         >
+          <span className="matrix-axis-side matrix-axis-left" aria-hidden="true">
+            Community / shared responsibility
+          </span>
+          <span className="matrix-axis-side matrix-axis-right" aria-hidden="true">
+            Individual autonomy / self-reliance
+          </span>
           <span className="matrix-line matrix-line-vertical" />
           <span className="matrix-line matrix-line-horizontal" />
           <svg className="matrix-connector" aria-hidden="true" focusable="false">
@@ -233,10 +239,6 @@ function CompatibilityMatrix({ result }: CompatibilityMatrixProps) {
             style={{ left: `${result.matrix.preference.x}%`, top: `${result.matrix.preference.y}%` }}
             title="Their preferences"
           />
-        </div>
-        <div className="matrix-axis-row">
-          <span>Community / shared responsibility</span>
-          <span>Individual autonomy / self-reliance</span>
         </div>
         <p className="matrix-axis-label matrix-axis-bottom">Structure / tradition / order</p>
         <div className="matrix-legend" aria-hidden="true">
