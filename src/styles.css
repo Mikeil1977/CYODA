@@ -336,6 +336,19 @@ input:focus {
   background: rgba(255, 250, 240, 0.5);
 }
 
+.privacy-note {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  color: var(--muted);
+  border: 1px solid rgba(35, 106, 112, 0.16);
+  border-radius: 12px;
+  background: rgba(238, 249, 246, 0.58);
+  font-size: clamp(0.84rem, 3.3vw, 0.94rem);
+  font-weight: 750;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .selection-hint {
   margin: 14px 0 0;
   font-weight: 700;

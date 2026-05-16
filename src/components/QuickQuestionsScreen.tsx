@@ -119,6 +119,9 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
         </p>
         <h2>{question.prompt}</h2>
         {question.example ? <p className="question-example">{question.example}</p> : null}
+        <p className="privacy-note">
+          No sign-up. No tracking of your answers. This runs in your browser.
+        </p>
 
         <fieldset key={question.id} className="scale-fieldset">
           <legend className="sr-only">{question.prompt}</legend>
