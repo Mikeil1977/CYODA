@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   compatibilityDimensionWeights,
   compatibilityQuestions,
@@ -21,6 +21,8 @@ const agreementScale: Array<{ label: string; value: AgreementValue }> = [
   { label: "Strongly agree", value: 5 },
 ];
 
+const ANSWER_ADVANCE_DELAY_MS = 280;
+
 type QuickQuestionsScreenProps = {
   devMode: boolean;
   onBack: () => void;
@@ -30,28 +32,50 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
   const [answers, setAnswers] = useState<Partial<CompatibilityAnswers>>({});
   const [questionIndex, setQuestionIndex] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [isAdvancing, setIsAdvancing] = useState(false);
+  const advanceTimerRef = useRef<number | null>(null);
   const question = compatibilityQuestions[questionIndex];
   const selectedAnswer = answers[question.id];
   const isLastQuestion = questionIndex === compatibilityQuestions.length - 1;
   const allAnswered = compatibilityQuestions.every((item) => answers[item.id]);
 
+  const clearAdvanceTimer = () => {
+    if (advanceTimerRef.current !== null) {
+      window.clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+  };
+
+  useEffect(() => clearAdvanceTimer, []);
+
   const selectAnswer = (value: AgreementValue) => {
+    if (isAdvancing) return;
+
+    clearAdvanceTimer();
     setAnswers((current) => ({ ...current, [question.id]: value }));
+    setIsAdvancing(true);
 
     const activeElement = document.activeElement;
     if (activeElement instanceof HTMLElement) {
       activeElement.blur();
     }
 
-    if (isLastQuestion) {
-      setShowResults(true);
-      return;
-    }
+    advanceTimerRef.current = window.setTimeout(() => {
+      advanceTimerRef.current = null;
 
-    setQuestionIndex((current) => current + 1);
+      if (isLastQuestion) {
+        setShowResults(true);
+      } else {
+        setQuestionIndex((current) => current + 1);
+      }
+
+      setIsAdvancing(false);
+    }, ANSWER_ADVANCE_DELAY_MS);
   };
 
   const goPrevious = () => {
+    if (isAdvancing) return;
+
     if (questionIndex === 0) {
       onBack();
       return;
@@ -61,8 +85,10 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
   };
 
   const reset = () => {
+    clearAdvanceTimer();
     setAnswers({});
     setQuestionIndex(0);
+    setIsAdvancing(false);
     setShowResults(false);
   };
 
@@ -103,6 +129,7 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
             >
               <input
                 checked={selectedAnswer === option.value}
+                disabled={isAdvancing}
                 name={`question-${question.id}`}
                 type="radio"
                 value={option.value}
@@ -117,7 +144,7 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
         <p className="selection-hint">Choose an answer to continue.</p>
 
         <div className="quiz-nav quiz-nav-single">
-          <button type="button" className="secondary-button" onClick={goPrevious}>
+          <button type="button" className="secondary-button" disabled={isAdvancing} onClick={goPrevious}>
             {questionIndex === 0 ? "Back to games" : "Previous"}
           </button>
         </div>
