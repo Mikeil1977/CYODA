@@ -211,6 +211,16 @@ function CompatibilityMatrix({ result }: CompatibilityMatrixProps) {
         >
           <span className="matrix-line matrix-line-vertical" />
           <span className="matrix-line matrix-line-horizontal" />
+          <svg className="matrix-connector" aria-hidden="true" focusable="false">
+            <line
+              className="matrix-connector-line"
+              x1={`${result.matrix.user.x}%`}
+              y1={`${result.matrix.user.y}%`}
+              x2={`${result.matrix.preference.x}%`}
+              y2={`${result.matrix.preference.y}%`}
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
           <span
             className="matrix-point matrix-point-user"
             aria-label="You"

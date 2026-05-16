@@ -182,8 +182,8 @@ export function deriveMatrixPoint(profile: CompatibilityProfile): MatrixPoint {
   ]);
 
   return {
-    x: clampPercentage(50 + (individual - community) / 2),
-    y: clampPercentage(50 + (structure - openness) / 2),
+    x: clampPercentage(50 + individual - community),
+    y: clampPercentage(50 + structure - openness),
   };
 }
 
