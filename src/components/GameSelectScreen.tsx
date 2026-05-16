@@ -18,7 +18,7 @@ export function GameSelectScreen({ onLeave, onPuzzle, onQuickQuestions }: GameSe
             <button type="button" disabled>Choose your own adventure</button>
             <span>Coming soon</span>
           </div>
-          <button type="button" className="secondary-button" onClick={onLeave}>Not for me</button>
+          <button type="button" className="secondary-button" onClick={onLeave}>Leave</button>
         </div>
       </section>
     </main>

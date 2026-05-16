@@ -150,11 +150,11 @@ export function getCompatibilitySummary(score: number) {
 }
 
 export function getResultExplanation(score: number) {
-  if (score >= 85) return "Your answers are highly aligned with my saved preferences.";
+  if (score >= 85) return "Your answers are highly aligned with their preferences.";
   if (score >= 70) return "Your answers show strong overall alignment, with a few differences.";
   if (score >= 50) return "Your answers show mixed alignment. Some values match closely, while others differ.";
-  if (score >= 30) return "Your answers differ from my saved preferences in several areas.";
-  return "Your answers show a very different value profile from my saved preferences.";
+  if (score >= 30) return "Your answers differ from their preferences in several areas.";
+  return "Your answers show a very different value profile from their preferences.";
 }
 
 export function deriveMatrixPoint(profile: CompatibilityProfile): MatrixPoint {

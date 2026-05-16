@@ -206,7 +206,7 @@ function CompatibilityMatrix({ result }: CompatibilityMatrixProps) {
         <p className="matrix-axis-label matrix-axis-top">Personal freedom / openness</p>
         <div
           className="matrix-plot"
-          aria-label="A two dimensional compatibility matrix comparing you and my saved preferences."
+          aria-label="A two dimensional compatibility matrix comparing your answers with their preferences."
           role="img"
         >
           <span className="matrix-line matrix-line-vertical" />
@@ -219,14 +219,14 @@ function CompatibilityMatrix({ result }: CompatibilityMatrixProps) {
           />
           <span
             className="matrix-point matrix-point-preference"
-            aria-label="My preferences"
+            aria-label="Their preferences"
             style={{ left: `${result.matrix.preference.x}%`, top: `${result.matrix.preference.y}%` }}
-            title="My preferences"
+            title="Their preferences"
           />
         </div>
         <div className="matrix-legend" aria-hidden="true">
           <span><i className="legend-dot legend-dot-user" />You</span>
-          <span><i className="legend-dot legend-dot-preference" />My preferences</span>
+          <span><i className="legend-dot legend-dot-preference" />Their preferences</span>
         </div>
         <div className="matrix-axis-row">
           <span>Community / shared responsibility</span>
@@ -299,7 +299,7 @@ function DevSelections({ answers, result }: DevSelectionsProps) {
     <section className="dev-calibration" aria-labelledby="dev-selections-title">
       <h3 id="dev-selections-title">Your selections</h3>
       <p>
-        Dev mode only. Use this to calibrate <code>myCompatibilityProfile</code> after answering as yourself.
+        Dev mode only. Use this to calibrate the saved compatibility profile after answering as yourself.
       </p>
 
       <h4>Profile from these answers</h4>

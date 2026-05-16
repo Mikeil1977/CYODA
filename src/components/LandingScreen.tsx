@@ -36,7 +36,7 @@ export function LandingScreen({ devMode, names, onLeave, onNamesChange, onStart 
 
         <div className="choices landing-actions">
           <button type="button" onClick={onStart}>I'm interested</button>
-          <button type="button" className="secondary-button" onClick={onLeave}>Not for me</button>
+          <button type="button" className="secondary-button" onClick={onLeave}>Leave</button>
         </div>
 
         {devMode ? (
