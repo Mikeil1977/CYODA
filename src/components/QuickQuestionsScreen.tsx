@@ -38,6 +38,11 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
   const selectAnswer = (value: AgreementValue) => {
     setAnswers((current) => ({ ...current, [question.id]: value }));
 
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
+
     if (isLastQuestion) {
       setShowResults(true);
       return;
@@ -82,7 +87,7 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
 
   return (
     <main className="app">
-      <section className="card quiz-card">
+      <section key={question.id} className="card quiz-card">
         <p className="meta quiz-progress">
           Question {questionIndex + 1} of {compatibilityQuestions.length}
         </p>
@@ -98,7 +103,7 @@ export function QuickQuestionsScreen({ devMode, onBack }: QuickQuestionsScreenPr
             >
               <input
                 checked={selectedAnswer === option.value}
-                name={question.id}
+                name={`question-${question.id}`}
                 type="radio"
                 value={option.value}
                 onChange={() => selectAnswer(option.value)}
