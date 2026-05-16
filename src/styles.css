@@ -487,7 +487,7 @@ input:focus {
 
 .matrix-wrap {
   display: grid;
-  gap: 8px;
+  gap: 7px;
 }
 
 .matrix-axis-label {
@@ -576,7 +576,8 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px 16px;
+  gap: 8px 16px;
+  margin-top: 4px;
   color: var(--ink-soft);
   font-size: 0.9rem;
   font-weight: 800;
@@ -607,6 +608,7 @@ input:focus {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
+  margin-top: 1px;
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 800;

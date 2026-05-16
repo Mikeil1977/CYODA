@@ -234,15 +234,15 @@ function CompatibilityMatrix({ result }: CompatibilityMatrixProps) {
             title="Their preferences"
           />
         </div>
-        <div className="matrix-legend" aria-hidden="true">
-          <span><i className="legend-dot legend-dot-user" />You</span>
-          <span><i className="legend-dot legend-dot-preference" />Their preferences</span>
-        </div>
         <div className="matrix-axis-row">
           <span>Community / shared responsibility</span>
           <span>Individual autonomy / self-reliance</span>
         </div>
         <p className="matrix-axis-label matrix-axis-bottom">Structure / tradition / order</p>
+        <div className="matrix-legend" aria-hidden="true">
+          <span><i className="legend-dot legend-dot-user" />You</span>
+          <span><i className="legend-dot legend-dot-preference" />Their preferences</span>
+        </div>
       </div>
     </section>
   );
