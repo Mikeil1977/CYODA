@@ -44,6 +44,8 @@ type ScoreBucket = {
   total: number;
 };
 
+const MATRIX_DISTANCE_SCALE = 0.95;
+
 export function clampPercentage(value: number) {
   return Math.min(100, Math.max(0, value));
 }
@@ -120,6 +122,8 @@ export function calculateCompatibilityResult(
     0,
   );
   const overallCompatibility = clampPercentage(weightedTotal / totalWeight);
+  const preferenceMatrixPoint = deriveMatrixPoint(preferenceProfile);
+  const projectedUserMatrixPoint = deriveMatrixPoint(userProfile);
   const strongestAlignments = [...dimensionResults]
     .sort((a, b) => b.compatibility - a.compatibility)
     .slice(0, 3);
@@ -132,12 +136,41 @@ export function calculateCompatibilityResult(
     dimensionResults,
     explanation: getResultExplanation(overallCompatibility),
     matrix: {
-      preference: deriveMatrixPoint(preferenceProfile),
-      user: deriveMatrixPoint(userProfile),
+      preference: preferenceMatrixPoint,
+      user: applyCompatibilityDistanceToMatrixPoint(
+        projectedUserMatrixPoint,
+        preferenceMatrixPoint,
+        overallCompatibility,
+      ),
     },
     overallCompatibility,
     strongestAlignments,
     summaryLabel: getCompatibilitySummary(overallCompatibility),
+  };
+}
+
+function applyCompatibilityDistanceToMatrixPoint(
+  userPoint: MatrixPoint,
+  preferencePoint: MatrixPoint,
+  compatibility: number,
+): MatrixPoint {
+  const xDistance = userPoint.x - preferencePoint.x;
+  const yDistance = userPoint.y - preferencePoint.y;
+  const currentDistance = Math.hypot(xDistance, yDistance);
+  const targetDistance = (100 - compatibility) * MATRIX_DISTANCE_SCALE;
+
+  if (currentDistance >= targetDistance) {
+    return userPoint;
+  }
+
+  const direction =
+    currentDistance > 0
+      ? { x: xDistance / currentDistance, y: yDistance / currentDistance }
+      : { x: 1 / Math.SQRT2, y: 1 / Math.SQRT2 };
+
+  return {
+    x: clampPercentage(preferencePoint.x + direction.x * targetDistance),
+    y: clampPercentage(preferencePoint.y + direction.y * targetDistance),
   };
 }
 
