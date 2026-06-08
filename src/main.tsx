@@ -5,22 +5,24 @@ import { GameSelectScreen } from "./components/GameSelectScreen";
 import { PuzzleScreen } from "./components/PuzzleScreen";
 import { QuickQuestionsScreen } from "./components/QuickQuestionsScreen";
 import { StoryScreen } from "./components/StoryScreen";
-import { defaultNames, story } from "./data/twentyMinutesWithMike";
+import { absurdThirtySixAdventure } from "./data/absurdThirtySixAdventure";
+import { defaultNames } from "./data/twentyMinutesWithMike";
 import { createInitialStoryState, getNextStoryState, isDevModeEnabled } from "./engine/storyEngine";
 import type { Choice, Names, StoryState } from "./types/conversation";
 import "./styles.css";
 
 type AppView = "gameSelect" | "quickQuestions" | "puzzle" | "story";
+const activeStory = absurdThirtySixAdventure;
 
 function App() {
   const devMode = isDevModeEnabled();
   const [names] = useState<Names>(defaultNames);
   const [view, setView] = useState<AppView>("gameSelect");
-  const [state, setState] = useState<StoryState>(() => createInitialStoryState(story));
+  const [state, setState] = useState<StoryState>(() => createInitialStoryState(activeStory));
   const [previousStates, setPreviousStates] = useState<StoryState[]>([]);
 
-  const node = story.nodes[state.nodeId];
-  const ending = state.endingId ? story.endings[state.endingId] : null;
+  const node = activeStory.nodes[state.nodeId];
+  const ending = state.endingId ? activeStory.endings[state.endingId] : null;
 
   const handleChoice = (choice: Choice) => {
     setPreviousStates((prev) => [...prev, state]);
@@ -39,7 +41,7 @@ function App() {
 
   const resetStory = () => {
     setPreviousStates([]);
-    setState(createInitialStoryState(story));
+    setState(createInitialStoryState(activeStory));
     setView("gameSelect");
   };
 
@@ -50,9 +52,12 @@ function App() {
   if (view === "gameSelect") {
     return (
       <GameSelectScreen
+        devMode={devMode}
+        onAdventure={() => setView("story")}
         onLeave={leaveForGoogle}
         onPuzzle={() => setView("puzzle")}
         onQuickQuestions={() => setView("quickQuestions")}
+        storyItems={activeStory.items}
       />
     );
   }
@@ -73,6 +78,7 @@ function App() {
         names={names}
         previousStepsCount={previousStates.length}
         state={state}
+        storyItems={activeStory.items}
         onBack={handleBack}
         onReset={resetStory}
       />
@@ -87,6 +93,7 @@ function App() {
         node={node}
         previousStepsCount={previousStates.length}
         state={state}
+        storyItems={activeStory.items}
         onBack={handleBack}
         onChoice={handleChoice}
       />

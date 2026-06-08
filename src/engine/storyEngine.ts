@@ -31,11 +31,34 @@ export function createInitialStoryState(story: StoryData): StoryState {
     nodeId: story.startNodeId,
     conversationState: "neutral",
     scores: {},
+    inventory: [],
     redFlags: [],
     unlockedTopics: [],
     history: [],
     endingId: null,
   };
+}
+
+function inventoryKey(item: StoryState["inventory"][number]) {
+  return `${item.itemId}:${item.variantId}`;
+}
+
+function addCollectedInventory(
+  inventory: StoryState["inventory"],
+  collected: NonNullable<Choice["effects"]>["collectItems"],
+) {
+  const nextInventory = [...inventory];
+  const existingKeys = new Set(nextInventory.map(inventoryKey));
+
+  (collected ?? []).forEach((item) => {
+    const key = inventoryKey(item);
+    if (!existingKeys.has(key)) {
+      nextInventory.push(item);
+      existingKeys.add(key);
+    }
+  });
+
+  return nextInventory;
 }
 
 export function getNextStoryState(prev: StoryState, choice: Choice): StoryState {
@@ -47,6 +70,7 @@ export function getNextStoryState(prev: StoryState, choice: Choice): StoryState 
 
   const nextRedFlags = [...prev.redFlags, ...(choice.effects?.redFlags ?? [])];
   const nextTopics = [...new Set([...prev.unlockedTopics, ...(choice.effects?.unlockTopics ?? [])])];
+  const nextInventory = addCollectedInventory(prev.inventory, choice.effects?.collectItems);
   const nextNodeId = choice.nextId;
   const isEnding = nextNodeId.startsWith("ending_");
 
@@ -56,6 +80,7 @@ export function getNextStoryState(prev: StoryState, choice: Choice): StoryState 
     endingId: isEnding ? nextNodeId : null,
     conversationState: choice.effects?.state ?? prev.conversationState,
     scores: nextScores,
+    inventory: nextInventory,
     redFlags: nextRedFlags,
     unlockedTopics: nextTopics,
     history: [
@@ -65,6 +90,7 @@ export function getNextStoryState(prev: StoryState, choice: Choice): StoryState 
         choiceId: choice.id,
         label: choice.label,
         type: choice.type,
+        signalCue: choice.signalCue,
         effects: choice.effects,
       },
     ],

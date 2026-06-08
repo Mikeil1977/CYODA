@@ -223,6 +223,65 @@ input:focus {
   width: min(100%, 340px);
 }
 
+.mike-item-lookup {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(35, 106, 112, 0.18);
+  text-align: left;
+}
+
+.mike-item-lookup h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: var(--teal-dark);
+  font-size: clamp(1rem, 3.8vw, 1.16rem);
+}
+
+.mike-item-lookup ul {
+  display: grid;
+  max-height: 320px;
+  gap: 10px;
+  margin: 0;
+  padding: 0 4px 0 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.mike-item-lookup li {
+  padding: 11px 12px;
+  border: 1px solid rgba(35, 106, 112, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 250, 240, 0.56);
+}
+
+.mike-item-lookup strong,
+.mike-item-lookup span,
+.mike-item-lookup small {
+  display: block;
+}
+
+.mike-item-lookup strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.mike-item-lookup span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.mike-item-lookup small {
+  margin-top: 3px;
+  color: var(--teal-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
 .disabled-game {
   display: grid;
   gap: 6px;
@@ -271,10 +330,149 @@ input:focus {
   text-align: left;
 }
 
+.dev-question-cue {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  color: var(--teal-dark);
+  border: 1px solid rgba(35, 106, 112, 0.16);
+  border-radius: 12px;
+  background: rgba(238, 249, 246, 0.68);
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.36;
+}
+
 .ending-reflection {
   margin: 24px 0;
   padding-top: 18px;
   border-top: 1px solid rgba(35, 106, 112, 0.18);
+}
+
+.ending-handoff,
+.inventory-panel {
+  margin: 22px 0;
+  padding: 14px;
+  border: 1px solid rgba(35, 106, 112, 0.18);
+  border-radius: 14px;
+  background: rgba(238, 249, 246, 0.62);
+}
+
+.inventory-panel h3,
+.ending-handoff h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--teal-dark);
+  font-size: clamp(1rem, 3.8vw, 1.16rem);
+}
+
+.inventory-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  color: var(--ink-soft);
+  list-style: none;
+}
+
+.inventory-list li {
+  position: relative;
+  padding-left: 18px;
+  font-weight: 750;
+  line-height: 1.38;
+}
+
+.inventory-list li::before {
+  position: absolute;
+  top: 0.58em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  content: "";
+  background: var(--coral);
+  transform: translateY(-50%);
+}
+
+.mike-readout {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(35, 106, 112, 0.18);
+}
+
+.mike-readout h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: var(--teal-dark);
+  font-size: clamp(1.05rem, 4vw, 1.22rem);
+}
+
+.mike-readout ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mike-readout li {
+  padding: 12px 13px;
+  border: 1px solid rgba(35, 106, 112, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 250, 240, 0.56);
+}
+
+.mike-readout strong,
+.mike-readout span,
+.mike-readout small {
+  display: block;
+}
+
+.mike-readout strong {
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.mike-readout span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.mike-readout small {
+  margin-top: 4px;
+  color: var(--teal-dark);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.approach-line {
+  margin-top: 16px;
+  padding: 13px 14px;
+  border: 1px solid rgba(231, 111, 81, 0.34);
+  border-radius: 12px;
+  background: rgba(255, 250, 240, 0.78);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.76) inset;
+}
+
+.approach-line h4 {
+  margin: 0 0 7px;
+  color: var(--coral-deep);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.approach-line p {
+  margin: 0;
+  color: var(--teal-dark);
+  font-size: clamp(1rem, 3.7vw, 1.1rem);
+  font-weight: 800;
+  line-height: 1.48;
 }
 
 .ending-reflection h3 {
@@ -859,6 +1057,28 @@ input:focus {
   margin-top: 5px;
 }
 
+.debug-list span,
+.debug-signal-cue,
+.debug-conversation-prompt {
+  display: block;
+}
+
+.debug-signal-cue {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.debug-conversation-prompt {
+  margin-top: 4px;
+  color: var(--teal-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
 .debug-history code,
 .debug-history pre {
   color: var(--teal-dark);
@@ -944,7 +1164,17 @@ button:focus-visible {
 }
 
 .choices button {
+  display: grid;
+  gap: 6px;
   width: 100%;
+}
+
+.choice-signal-cue {
+  display: block;
+  color: rgba(255, 250, 240, 0.82);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .secondary-button {
