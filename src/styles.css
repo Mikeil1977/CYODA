@@ -365,6 +365,14 @@ input:focus {
   font-size: clamp(1rem, 3.8vw, 1.16rem);
 }
 
+.handoff-intro {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: clamp(0.94rem, 3.5vw, 1rem);
+  font-weight: 760;
+  line-height: 1.42;
+}
+
 .inventory-list {
   display: grid;
   gap: 7px;

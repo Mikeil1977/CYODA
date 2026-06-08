@@ -31,9 +31,12 @@ function InventoryHandoff({ names, state, storyItems }: Pick<EndingScreenProps, 
     <section className="ending-handoff" aria-label="Collected inventory handoff">
       <h3>You are carrying</h3>
       {hasInventory ? (
-        <ul className="inventory-list">
-          {state.inventory.map((entry) => <li key={getInventoryKey(entry)}>{getInventoryDetails(storyItems, entry).label}</li>)}
-        </ul>
+        <>
+          <p className="handoff-intro">If this made you curious, come and tell {names.subjectName} you found:</p>
+          <ul className="inventory-list">
+            {state.inventory.map((entry) => <li key={getInventoryKey(entry)}>{getInventoryDetails(storyItems, entry).label}</li>)}
+          </ul>
+        </>
       ) : (
         <p>You are not carrying much. That is allowed. Some evenings are mainly weather.</p>
       )}
