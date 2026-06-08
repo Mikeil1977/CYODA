@@ -67,6 +67,11 @@ for (const node of Object.values(absurdThirtySixAdventure.nodes)) {
       choiceSignalCueCount += 1;
     }
 
+    assert(
+      (choice.effects?.collectItems?.length ?? 0) > 0,
+      `choice ${choice.id} collects a public item variant`,
+    );
+
     for (const item of choice.effects?.collectItems ?? []) {
       collectedVariantCount += 1;
       assert(Boolean(choice.signalCue), `collecting choice ${choice.id} includes a dev-only signal cue`);
@@ -101,4 +106,4 @@ for (const copy of publicCopy) {
 }
 
 assert(choiceSignalCueCount >= 12, "prototype includes dev-only signal cues on meaningful choices");
-assert(collectedVariantCount >= 30, "prototype includes enough answer-specific collected variants");
+assert(collectedVariantCount >= 45, "prototype includes answer-specific collected variants for every choice");
